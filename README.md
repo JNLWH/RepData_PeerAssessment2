@@ -1,2 +1,1 @@
-# RepData_PeerAssessment2
-Reproducible Research Peer Assignment 2 - Storm
+This is part of the course assignment from Reproducible Research Course 4.
