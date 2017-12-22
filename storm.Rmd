@@ -19,13 +19,16 @@ In the weather event data, there are data about type of weather event, the start
 Download and process data packages after loading needed R packages.
 
 ```{r}
-
 library(data.table)
 library(dplyr)
 library(ggplot2)
 library(knitr)
 library(lubridate)
+```
 
+Download data and information documents. Add variable of Start Year `BGN_Year`to the data table.
+
+```{r}
 url <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2"
 download.file(url,
               destfile='storm.zip',
@@ -94,18 +97,26 @@ rm(dfStormDamage_K, dfStormDamage_M, dfStormDamage_B)
 
 If we look at the total damage by event type, we got **Flood** as the most costliest event type of all times.
 
+Because of the aggregated damage value for top 10 event types are fairly large, all numbers are presented in Millions of USD.
+
 ```{r}
 Top10Damage <- dfStormDamage %>%
         group_by (EVTYPE) %>% 
         summarise(TotalDamage = sum(Total)) %>%
         arrange(-TotalDamage) %>%
-        slice(1:10)
+        slice(1:10) 
 
-Top10Costly <- ggplot(Top10Damage, aes(EVTYPE,TotalDamage)) +
+div=1000000
+
+Top10Costly <- ggplot(Top10Damage, aes(EVTYPE,TotalDamage/div)) +
         geom_point(aes(color = EVTYPE, size = TotalDamage)) +
         labs(title='Top 10 Costliest Weather Event Type All Time (1950-2011)',
              x='Event Type',
-             y='Total Damage (in USD)')
+             y='Total Damage (USD in Millions)') +
+        scale_y_continuous(labels=function(y) 
+                format(y, big.mark=",", scientific=FALSE)) +
+        theme(legend.position="none",
+              axis.text.x = element_text(angle=90, vjust = 0.5, hjust = 1))
 
 Top10Costly
 ```
@@ -120,11 +131,16 @@ dfDamage_byYear <- dfStormDamage %>%
 
 Top20Damage_byYear <- dfDamage_byYear[1:20,]
 
-Top20Costly_byYear <- ggplot(Top20Damage_byYear, aes(BGN_Year, TotalDamage)) +
+Top20Costly_byYear <- ggplot(Top20Damage_byYear, 
+                             aes(x=BGN_Year, y=TotalDamage/div, fill=TotalDamage)) +
         geom_point(aes(color = EVTYPE, size = TotalDamage)) +
         labs(title='Top 20 Costliest Weather Event Types by Year',
              x='Year',
-             y='Total Damage (in USD)')
+             y='Total Damage (USD in Millions)') +
+        scale_y_continuous(labels=function(y) 
+                format(y, big.mark=",", scientific=FALSE)) +
+        guides(fill='none', size='none') +
+        scale_color_discrete(name="Event Type")
 
 Top20Costly_byYear
 ```
