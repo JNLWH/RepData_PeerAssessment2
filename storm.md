@@ -1,4 +1,4 @@
-# Nature Events and Their Impact to Our Society
+# Nature Events and Their Impact on Our Society
 by Jiani  
 21 Dec, 2017  
 
@@ -95,7 +95,9 @@ download.file(urlFAQ,
 dfStorm$BGN_Year <- as.numeric(format(as.Date(dfStorm$BGN_DATE, "%m/%d/%Y"),"%Y"))
 ```
 
-### Most Harmful Event Type for Public Health (1950-2011)
+### Results
+
+#### Most Harmful Event Type for Public Health (1950-2011)
 
 Here we look at both death tolls (variable `FATALITIES`) and the number of people who were injured (variable `INJURIES`) throughout the entire record period. Some earlier years had less record and later years the record was more complete.
 
@@ -128,9 +130,9 @@ Top10Harmful
 ## 10      WINTER STORM     1527
 ```
 
-### Event Type with Greatest Economic Consequence - the Costliest
+#### Event Type with Greatest Economic Consequence - the Costliest
 
-#### Calculate Property Damage
+##### Calculate Property Damage
 
 Because Property Damage `PROPDMG` shows numbers in either by thousands (K), millions (M) or billions (B), it is necessary to calculate the total numerical value of damages using Property Damage Expressions `PROPDMGEXP`. 
 
@@ -155,6 +157,8 @@ dfStormDamage <- bind_rows(dfStormDamage_B, dfStormDamage_M, dfStormDamage_K)
 
 rm(dfStormDamage_K, dfStormDamage_M, dfStormDamage_B)
 ```
+
+##### The Costliest of All Times - Flood
 
 If we look at the total damage by event type, we got **Flood** as the most costliest event type of all times.
 
@@ -182,6 +186,8 @@ ggplot(Top10Damage, aes(EVTYPE,TotalDamage/div)) +
 ```
 
 ![](storm_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+
+##### The Costliest Event Type per Year
 
 If we want to look further into which year and which type of event caused most damage financially, we calculate a new data table for Top 20 Costliest Event Type per Year . Here we see that **Flood** in **2006** shows the costliest event of all times.
 
