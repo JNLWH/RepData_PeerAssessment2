@@ -58,7 +58,7 @@ Here we look at both death tolls (variable `FATALITIES`) and the number of peopl
 
 The result shows **Tornado** caused most fatalities and injured combined. No. 2 most harmful would be **Excessive Heat**.
 
-```{r}
+```{r echo=TRUE}
 Top10Harmful <- dfStorm %>% 
         group_by (EVTYPE) %>% 
         summarise(totalAll = sum(FATALITIES)+sum(INJURIES)) %>%
@@ -99,7 +99,7 @@ If we look at the total damage by event type, we got **Flood** as the most costl
 
 Because of the aggregated damage value for top 10 event types are fairly large, all numbers are presented in Millions of USD.
 
-```{r}
+```{r echo=TRUE}
 Top10Damage <- dfStormDamage %>%
         group_by (EVTYPE) %>% 
         summarise(TotalDamage = sum(Total)) %>%
@@ -123,7 +123,7 @@ Top10Costly
 
 If we want to look further into which year and which type of event caused most damage financially, we calculate a new data table for Top 20 Costliest Event Type per Year . Here we see that **Flood** in **2006** shows the costliest event of all times.
 
-```{r}
+```{r echo=TRUE}
 dfDamage_byYear <- dfStormDamage %>%
         group_by (EVTYPE, BGN_Year) %>% 
         summarise(TotalDamage = sum(Total)) %>%

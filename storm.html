@@ -159,6 +159,26 @@ library(lubridate)</code></pre>
 ## 
 ##     date</code></pre>
 <p>Download data and information documents. Add variable of Start Year <code>BGN_Year</code>to the data table.</p>
+<pre class="r"><code>url &lt;- &quot;https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2&quot;
+download.file(url,
+              destfile='storm.zip',
+              method=&quot;curl&quot;,
+              mode=&quot;wb&quot;) 
+dfStorm &lt;- read.csv(&quot;storm.zip&quot;)
+
+urlDoc &lt;-&quot;https://d396qusza40orc.cloudfront.net/repdata%2Fpeer2_doc%2Fpd01016005curr.pdf&quot;
+download.file(urlDoc,
+              destfile = 'Doc.pdf',
+              method = 'curl',
+              mode='wb') 
+
+urlFAQ &lt;-&quot;https://d396qusza40orc.cloudfront.net/repdata%2Fpeer2_doc%2FNCDC%20Storm%20Events-FAQ%20Page.pdf&quot;
+download.file(urlFAQ,
+              destfile = 'FAQ.pdf',
+              method = 'curl',
+              mode='wb') 
+
+dfStorm$BGN_Year &lt;- as.numeric(format(as.Date(dfStorm$BGN_DATE, &quot;%m/%d/%Y&quot;),&quot;%Y&quot;))</code></pre>
 </div>
 <div id="most-harmful-event-type-for-public-health-1950-2011" class="section level3">
 <h3>Most Harmful Event Type for Public Health (1950-2011)</h3>
